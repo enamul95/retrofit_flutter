@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // is not restarted.
@@ -37,67 +38,53 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("Retrofit Post Call"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            RaisedButton(
-                child: Text("Fetch Post"),
-                // onPressed: () => {
-                //       setState(() {
-                //         pressed = true;
-                //         //fetchData(postNum);
-                //       })
-                //     }),
-
-                onPressed: () => {callApi()}),
-            Padding(padding: EdgeInsets.all(30)),
-            // pressed ? _buildBody(context) : SizedBox(),
-            // pressed:(){},
-          ],
+      body: Container(
+        // color: Colors.cyanAccent,
+        //  margin: const EdgeInsets.all(20.0),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: TextField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: const EdgeInsets.all(20.0),
+                        labelText: 'User Name',
+                        hintText: 'Enter User Id.'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Passowrd',
+                        hintText: 'Enter Password'),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  child: Text('Login'),
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(20)),
+                  onPressed: () => {doLogin()},
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 }
 
-callApi() {
+doLogin() {
   print("calling ....");
   final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
   client.getTasks();
-}
-
-FutureBuilder<Post> _buildBody(BuildContext context) {
-  final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
-  return FutureBuilder<Post>(
-    future: client.getTasks(),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.done) {
-        final Post? posts = snapshot.data;
-        return _buildPosts(context, posts!);
-      } else {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-    },
-  );
-}
-
-Widget _buildPosts(BuildContext context, Post posts) {
-  return Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          "Name : " + posts.name,
-          style: TextStyle(fontSize: 30),
-        ),
-        Text(
-          "Age : " + posts.age.toString(),
-          style: TextStyle(fontSize: 30),
-        ),
-      ],
-    ),
-  );
 }

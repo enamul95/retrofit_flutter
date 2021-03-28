@@ -24,7 +24,7 @@ Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
 
 class _RestClient implements RestClient {
   _RestClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://10.11.201.179:8080/';
+    baseUrl ??= 'http://localhost:8080/';
   }
 
   final Dio _dio;

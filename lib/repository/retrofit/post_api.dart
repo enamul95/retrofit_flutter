@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 part 'post_api.g.dart';
 
-@RestApi(baseUrl: "http://10.11.201.179:8080/")
+@RestApi(baseUrl: "http://localhost:8080/")
 abstract class RestClient {
   factory RestClient(Dio dio) = _RestClient;
   @GET("user")

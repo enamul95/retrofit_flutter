@@ -28,7 +28,8 @@ dependencies:
   #json_annotation: 3.1.1
   json_annotation: ^4.0.0
   logger: ^1.0.0
-  dio: ^4.0.0-prev3
+  dio: ^4.0.0
+  #dio: ^4.0.0-prev3
 
 
   # The following adds the Cupertino Icons font to your application.
