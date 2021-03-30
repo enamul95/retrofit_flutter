@@ -8,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit_flutter/welcome/welcome.dart';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -24,8 +23,10 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Home(),
-      //  home: MyCustomForm(),
+      // home: Home(),
+      home: Scaffold(
+        body: Login(),
+      ),
     );
   }
 }
@@ -93,7 +94,7 @@ doLogin(BuildContext context) {
   print("calling ....");
   final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
 
-  client.getTasks().then((it) {
+  client.getTasks("", "").then((it) {
     ///  Logger().i(it);
 
     if ("0" == it.outCode) {
@@ -112,3 +113,101 @@ doLogin(BuildContext context) {
     MaterialPageRoute(builder: (context) => Welcome()),
   );
   */
+
+class Login extends StatefulWidget {
+  @override
+  CustomLogin createState() {
+    return CustomLogin();
+  }
+}
+
+class CustomLogin extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    // Build a Form widget using the _formKey created above.
+    return Form(
+      key: _formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: TextFormField(
+                  controller: usernameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter User name';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: const EdgeInsets.all(20.0),
+                      labelText: 'User Name',
+                      hintText: 'Enter User Id.'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: TextFormField(
+                  controller: passwordController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter password';
+                    }
+                    return null;
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Passowrd',
+                      hintText: 'Enter Password'),
+                ),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                child: Text('Login'),
+                style:
+                    ElevatedButton.styleFrom(padding: const EdgeInsets.all(20)),
+                onPressed: () => {
+                  if (_formKey.currentState!.validate())
+                    {
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //     SnackBar(content: Text('Processing Data')))
+                      //print(usernameController.text)
+                      doLogin2(context, usernameController.text.toString(),
+                          passwordController.text.toString()),
+                    }
+                  // doLogin(context)
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+doLogin2(BuildContext context, String username, String password) {
+  print("calling ....");
+  final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
+
+  client.getTasks(username, password).then((it) {
+    ///  Logger().i(it);
+
+    if ("0" == it.outCode) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Welcome()));
+    }
+  }).catchError((error, stackTrace) {
+    // non-200 error goes here.
+    print("inner: $error");
+  });
+}

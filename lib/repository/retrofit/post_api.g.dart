@@ -40,12 +40,15 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<Post> getTasks() async {
+  Future<Post> getTasks(username, password) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'username': username,
+      r'password': password
+    };
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Post>(
-        Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+        Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
             .compose(_dio.options, 'user',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));

@@ -7,8 +7,9 @@ part 'post_api.g.dart';
 @RestApi(baseUrl: "http://localhost:8080/")
 abstract class RestClient {
   factory RestClient(Dio dio) = _RestClient;
-  @GET("user")
-  Future<Post> getTasks();
+  @POST("user")
+  Future<Post> getTasks(
+      @Query("username") String username, @Query("password") String password);
 }
 /*
 @JsonSerializable(explicitToJson: true)
