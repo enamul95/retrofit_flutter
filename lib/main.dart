@@ -2,6 +2,7 @@ import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:retrofit/http.dart';
 import 'package:retrofit_flutter/repository/retrofit/post_api.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -79,7 +80,9 @@ class _HomeState extends State<Home> {
                   child: Text('Login'),
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(20)),
-                  onPressed: () => {doLogin(context)},
+                  onPressed: () => {
+                    // doLogin(context)
+                  },
                 ),
               ],
             ),
@@ -89,7 +92,7 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
+/*
 doLogin(BuildContext context) {
   print("calling ....");
   final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
@@ -99,14 +102,14 @@ doLogin(BuildContext context) {
 
     if ("0" == it.outCode) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Welcome()));
+          context, MaterialPageRoute(builder: (context) => Welcome(post: it)));
     }
   }).catchError((error, stackTrace) {
     // non-200 error goes here.
     print("inner: $error");
   });
 }
-
+*/
 // tasks.
 /*Navigator.push(
     context,
@@ -181,7 +184,7 @@ class CustomLogin extends State<Login> {
                       // ScaffoldMessenger.of(context).showSnackBar(
                       //     SnackBar(content: Text('Processing Data')))
                       //print(usernameController.text)
-                      doLogin2(context, usernameController.text.toString(),
+                      doLoginAction(context, usernameController.text.toString(),
                           passwordController.text.toString()),
                     }
                   // doLogin(context)
@@ -195,16 +198,14 @@ class CustomLogin extends State<Login> {
   }
 }
 
-doLogin2(BuildContext context, String username, String password) {
+doLoginAction(BuildContext context, String username, String password) {
   print("calling ....");
   final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
 
   client.getTasks(username, password).then((it) {
-    ///  Logger().i(it);
-
     if ("0" == it.outCode) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Welcome()));
+          context, MaterialPageRoute(builder: (context) => Welcome(post: it)));
     }
   }).catchError((error, stackTrace) {
     // non-200 error goes here.
