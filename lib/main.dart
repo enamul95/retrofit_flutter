@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:dio/dio.dart';
 import 'package:retrofit_flutter/welcome/welcome.dart';
-import 'package:validators/validators.dart';
+
 
 void main() {
   runApp(MyApp());
