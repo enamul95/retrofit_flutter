@@ -1,8 +1,13 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:retrofit_flutter/repository/retrofit/post_api.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:dio/dio.dart';
+import 'package:retrofit_flutter/welcome/welcome.dart';
+import 'package:validators/validators.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,6 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Home(),
+      //  home: MyCustomForm(),
     );
   }
 }
@@ -72,7 +78,7 @@ class _HomeState extends State<Home> {
                   child: Text('Login'),
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(20)),
-                  onPressed: () => {doLogin()},
+                  onPressed: () => {doLogin(context)},
                 ),
               ],
             ),
@@ -83,8 +89,26 @@ class _HomeState extends State<Home> {
   }
 }
 
-doLogin() {
+doLogin(BuildContext context) {
   print("calling ....");
   final client = RestClient(Dio(BaseOptions(contentType: "application/json")));
-  client.getTasks();
+
+  client.getTasks().then((it) {
+    ///  Logger().i(it);
+
+    if ("0" == it.outCode) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Welcome()));
+    }
+  }).catchError((error, stackTrace) {
+    // non-200 error goes here.
+    print("inner: $error");
+  });
 }
+
+// tasks.
+/*Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Welcome()),
+  );
+  */

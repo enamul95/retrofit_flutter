@@ -25,13 +25,20 @@ class Post {
 
 @JsonSerializable()
 class Post {
+  int id;
   String name;
   int age;
+  String address;
+  String outCode;
+  String outMessage;
 
-  Post({
-    required this.name,
-    required this.age,
-  });
+  Post(
+      {required this.id,
+      required this.name,
+      required this.age,
+      required this.address,
+      required this.outCode,
+      required this.outMessage});
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 
