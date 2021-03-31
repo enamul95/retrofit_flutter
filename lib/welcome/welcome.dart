@@ -40,6 +40,7 @@ class WelcomeBody extends StatefulWidget {
 }
 
 class CustomBodybody extends State<WelcomeBody> {
+  
   Post post;
   CustomBodybody(Post this.post);
 

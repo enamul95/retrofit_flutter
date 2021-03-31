@@ -29,6 +29,8 @@ dependencies:
   json_annotation: ^4.0.0
   logger: ^1.0.0
   dio: ^4.0.0
+  sweetalert: any
+  #sweet_alert_dialogs: "^0.1.0"
   #validators: ^2.0.0
   #dio: ^4.0.0-prev3
 
@@ -41,6 +43,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   retrofit_generator: any
+  #modal_progress_hud: ^0.1.3
   #build_runner: any
   
   #json_serializable: any
